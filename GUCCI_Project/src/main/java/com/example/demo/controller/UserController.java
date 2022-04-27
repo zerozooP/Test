@@ -37,12 +37,12 @@ public class UserController {
 	
 	@PostMapping("/login")
 	@ResponseBody
-	public String login(UserVO vo, Model model) {
-		UserVO user = svc.readLogin(vo);
-		boolean ok = svc.login(vo);
+	public String login(UserVO user, Model model) {
+		UserVO vo = svc.readLogin(user);
+		boolean ok = svc.login(user);
 		if(ok) {
-			model.addAttribute("uid",vo.getUid());
-			session.setAttribute("name", user.getName());
+			model.addAttribute("uid",user.getUid());
+			session.setAttribute("name", vo.getName());
 		}
 		return String.format("{\"ok\":%b}", ok);
 	}
