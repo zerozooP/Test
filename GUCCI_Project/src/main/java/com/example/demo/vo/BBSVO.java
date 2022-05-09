@@ -1,5 +1,7 @@
 package com.example.demo.vo;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +16,8 @@ public class BBSVO {
 	private int cnt;
 	private int reply;
 	private int liked;
+	private String changeYn;
+	private List<Long> fileIdxs;
 	
 	public BBSVO() {}
 
@@ -29,15 +33,32 @@ public class BBSVO {
 		this.reply = reply;
 		this.liked = liked;
 	}
+	
+	public String getChangeYn() {
+		return changeYn;
+	}
 
-	public int getliked() {
+	public void setChangeYn(String changeYn) {
+		this.changeYn = changeYn;
+	}
+
+	public List<Long> getFileIdxs() {
+		return fileIdxs;
+	}
+
+	public void setFileIdxs(List<Long> fileIdxs) {
+		this.fileIdxs = fileIdxs;
+	}
+
+	
+	public int getLiked() {
 		return liked;
 	}
 
-	public void setliked(int liked) {
+	public void setLiked(int liked) {
 		this.liked = liked;
 	}
-
+	
 	public int getReply() {
 		return reply;
 	}

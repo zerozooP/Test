@@ -39,8 +39,9 @@
 	</select>
 
 	<insert id="insertAdd"
-		parameterType="com.example.demo.vo.BBSVO">
-		INSERT INTO bbs VALUES(NULL,#{uid},#{name},#{title},#{content},#{date},0,0,0)
+		parameterType="com.example.demo.vo.BBSVO"
+		useGeneratedKeys="true" keyProperty="num">
+		INSERT INTO bbs VALUES(NULL,#{uid},#{name},#{title},#{content},#{date},0,0,0,#{changeYn})
 	</insert>
 	
 	<select id="getList"

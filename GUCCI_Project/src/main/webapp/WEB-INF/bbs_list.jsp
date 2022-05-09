@@ -13,6 +13,7 @@
 		</style>
 		<title>프로젝트 게시판</title>
 		<script>
+		
 			function bbs_add(uid){
 				if (uid == "") {
 					alert("로그인 후 이용가능합니다.")

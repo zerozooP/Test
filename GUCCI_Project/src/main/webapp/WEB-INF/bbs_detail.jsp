@@ -5,6 +5,19 @@
 	<head>
 		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
 		<title>게시글 상세 보기</title>
+		<style>
+			a {
+				text-decoration:none;
+				color : black; 
+			}
+			.loginBtn {
+				text-align:right;
+				margin : 5px;
+			}
+			.btn1 {
+				margin : 5px;
+			}
+		</style>
 		<script>
 			function edit(uid){
 				location.href="/bbs_edit/${detail.num}";
@@ -52,19 +65,23 @@
 				});
 				return false;
 			}
-			
+
 			function reRep(rno, grps, ruid){
-				var listHtml = '<form id="reReplyForm" onsubmit="return reReply_ajax();">'
-				listHtml += '<div>'
-				listHtml += '<p><strong>${uid}</strong></p>'
-				listHtml += '<input type="hidden" id="grp" name="grp" value="'+rno+'">'
-				listHtml += '<input type="hidden" id="grps" name="grps" value="'+grps+'">'
-				listHtml += '<input type="hidden" id="bno" name="bno" value="${detail.num}">'
-				listHtml += '<input type="hidden" id="uid" name="uid" value="${uid}">'
-				listHtml += '<textarea rows="4" cols="50" id="rcmt" name="cmt" placeholder="댓글입력.."></textarea>'
-				listHtml += '<button type="submit">등록</button>'
-				listHtml += '</div>'
-				listHtml += '</form>'
+				console.log(`rno=\${rno}, grps=\${grps}, ruid=\${ruid}`);
+				
+				const listHtml = `
+						<form id="reReplyForm" onsubmit="return reReply_ajax();">
+							<div>
+							<p><strong>${uid}</strong></p>
+								<input type="hidden" id="grp" name="grp" value="\${rno}">
+								<input type="hidden" id="grps" name="grps" value="\${grps}">
+								<input type="hidden" id="bno" name="bno" value="${detail.num}">
+								<input type="hidden" id="uid" name="uid" value="${uid}">
+								<textarea rows="4" cols="50" id="rcmt" name="cmt" placeholder="댓글입력.."></textarea>
+								<button type="submit">등록</button>
+							</div>
+						</form>
+					`;
 				$('#reReply'+rno+grps).html(listHtml);
 			}
 			
@@ -177,166 +194,144 @@
 					            </tr>
 					        </tbody>
 					    </table>
-					    
-					    <a href="/bbs_list/1" class="btn btn-outline-primary btn-sm">목록</a>
-					    
-					    <!-- 작성자와 로그인유저가 동일 유저라면 수정, 삭제 활성화  -->
-					    <c:set value="${uid}" var="uid"/>
-					    <c:set value="${detail.uid}" var="duid"/>
-					    <c:if test="${uid==duid}">
-    					    <button type="button" onclick="edit(${detail.num});" class="btn btn-outline-primary btn-sm">수정</button>
-    					    <button type="button" onclick="del(${detail.num},'${detail.uid}');" class="btn btn-outline-primary btn-sm">삭제</button>
-					    </c:if>
-					    <!-- end -->
-					    <button type="button" onclick="like(${detail.num},'${uid}')" class="btn btn-danger btn-sm">♥ ${detail.liked} </button>
-					    
-					    <br>
+					    <div class="btn1">
+						    <c:set value="${fileList}" var="fileList"/>
+					        <c:if test="${!empty fileList}">
+					        	<div class="form-group">
+					        		<div class="col-sm-10">
+										<div class="form-control file_list">
+											<c:forEach items="${fileList}" var="files">
+												<div>
+													<a href="/bbs_download/${files.idx}">
+														<img src="../img/file.png" alt="이미지">
+														${files.originalName}
+													</a>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+					        	</div>
+					        </c:if>
+					    </div>
+					    <div class="btn1">
+						    <a href="/bbs_list/1" class="btn btn-outline-primary btn-sm">목록</a>
+						    <!-- 작성자와 로그인유저가 동일 유저라면 수정, 삭제 활성화  -->
+						    <c:set value="${uid}" var="uid"/>
+						    <c:set value="${detail.uid}" var="duid"/>
+						    <c:if test="${uid==duid}">
+		   					    <button type="button" onclick="edit(${detail.num});" class="btn btn-outline-primary btn-sm">수정</button>
+		   					    <button type="button" onclick="del(${detail.num},'${detail.uid}');" class="btn btn-outline-primary btn-sm">삭제</button>
+						    </c:if>
+						    <!-- end -->
+						    <button type="button" onclick="like(${detail.num},'${uid}')" class="btn btn-danger btn-sm">♥ ${detail.liked} </button>
+					    </div>
                         <!-- Comments section-->
 	                    <section class="mb-5">
 	                        <div class="card bg-light">
 	                            <div class="card-body">
+	                            
 	                                <!-- Comment form-->
-	                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-	                                <!-- Comment with nested comments-->
-	                                <div class="d-flex mb-4">
-	                                    <!-- Parent comment-->
-	                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-	                                    <div class="ms-3">
-	                                        <div class="fw-bold">Commenter Name</div>
-	                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-	                                        <!-- Child comment 1-->
-	                                        <div class="d-flex mt-4">
-	                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-	                                            <div class="ms-3">
-	                                                <div class="fw-bold">Commenter Name</div>
-	                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-	                                            </div>
-	                                        </div>
-	                                        <!-- Child comment 2-->
-	                                        <div class="d-flex mt-4">
-	                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-	                                            <div class="ms-3">
-	                                                <div class="fw-bold">Commenter Name</div>
-	                                                When you put money directly to a problem, it makes a good headline.
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <!-- Single comment-->
-	                                <div class="d-flex">
-	                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-	                                    <div class="ms-3">
-	                                        <div class="fw-bold">Commenter Name</div>
-	                                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-	                                    </div>
-	                                </div>
+	                                <c:choose>
+	                                	<c:when test="${uid==null}">
+												<textarea class="form-control" rows="3" placeholder="Please login and leave a comment!" disabled></textarea>
+												<div class="loginBtn"><a href="/login" class="btn btn-outline-primary btn-sm">로그인</a></div>
+										</c:when>
+										<c:otherwise>
+											<form id="replyForm" onsubmit="return reply_ajax();"> 
+												<div>
+													<p><strong>${uid}</strong></p>
+													<input type="hidden" id="bno" name="bno" value="${detail.num}">
+													<input type="hidden" id="uid" name="uid" value="${uid}">
+													<textarea class="form-control" rows="3" id="cmt" name="cmt" placeholder="Please leave a comment!"></textarea>
+													<div class="loginBtn"><button type="submit" class="btn btn-outline-primary btn-sm">작성</button></div>
+												</div>
+											</form>
+										</c:otherwise>
+	                                </c:choose>
+	                               
+	                               <!-- 댓글 목록 -->
+	                                						
+									<c:forEach var="r" items="${reply}">
+										<c:set value="${r.uid}" var="ruid" />
+										<c:set value="${r.grp}" var="grp" />
+										<c:set value="${r.rno}" var="rno" />
+										<c:set value="${r.cmt}" var="cmt" />
+										
+										<div class="d-flex mb-4">
+				                            <div class="ms-3">
+				                            	<!-- Parent comment-->
+				                            	<c:if test="${grp == null}" >
+				                            		<span class="fw-bold">${r.uid}&nbsp;(${r.repDate})</span>
+			                            			<!-- 비로그인 상태일 때 댓글 목록 -->
+													<c:if test="${uid==null}">
+														<c:if test="${cmt==''}">
+															<p style="color:#808080;">삭제된 메세지 입니다.
+														</c:if>
+														<p>${r.cmt}
+													</c:if>
+													<!-- 로그인 후 로그인유저가 작성하지 않은 댓글 -->
+													<c:if test="${uid!=ruid and uid!=null}">
+														<a href="javascript:reRep(${r.rno},${r.grps},'${ruid}');">[답글]</a>
+														<c:if test="${cmt==''}">
+															<p style="color:#808080;">삭제된 메세지 입니다.
+														</c:if>
+														<p>${r.cmt}
+														<span id="reReply${r.rno}${r.grps}"></span>
+													</c:if>
+													
+													<!-- 로그인 후 로그인유저가 작성한 댓글 -->
+													<c:if test="${uid==ruid}">
+														<a href="javascript:reRep(${rno},${r.grps},'${ruid}');">[답글]</a>
+														<a href="javascript:repDelete(${rno},${r.bno},${r.grp})">[삭제]</a>
+														<c:if test="${cmt==''}">
+															<p style="color:#808080;">삭제된 메세지 입니다.
+														</c:if>
+														<p>${r.cmt}
+														<span id="reReply${r.rno}${r.grps}"></span>
+													</c:if>
+				                            	</c:if>
+				                                <!-- 모댓글 end -->
+				                                
+				                                <!-- 대댓글 -->
+				                                <c:if test="${grp != null}" >
+				                                        <span class="fw-bold">&nbsp;&nbsp;&nbsp;&nbsp;${r.uid}&nbsp;(${r.repDate})</span>
+				                                    	<!-- 비로그인 상태일 때 댓글 목록 -->
+														<c:if test="${uid==null}">
+															<c:if test="${cmt==''}">
+																<p style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;삭제된 메세지 입니다.
+															</c:if>
+															<p>&nbsp;&nbsp;&nbsp;&nbsp;${r.cmt}
+														</c:if>
+														
+														<!-- 로그인 후 로그인유저가 작성하지 않은 댓글 -->
+														<c:if test="${uid!=ruid and uid!=null}">
+															<a href="javascript:reRep(${r.grp},${r.grps},'${ruid}');">[답글]</a>
+															<c:if test="${cmt==''}">
+																<p style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;삭제된 메세지 입니다.
+															</c:if>
+															<p>&nbsp;&nbsp;&nbsp;&nbsp;${r.cmt}
+															<span id="reReply${r.grp}${r.grps}"></span>
+														</c:if>
+														
+														<!-- 로그인 후 로그인유저가 작성한 댓글 -->
+														<c:if test="${uid==ruid}">
+															<a href="javascript:reRep(${r.grp},${r.grps},'${ruid}');">[답글]</a>
+															<a href="javascript:repDelete(${rno},${r.bno},${r.grp})">[삭제]</a>
+															<c:if test="${cmt==''}">
+																<p style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;삭제된 메세지 입니다.
+															</c:if>
+															<p>&nbsp;&nbsp;&nbsp;&nbsp;${r.cmt}
+															<span id="reReply${r.grp}${r.grps}"></span>
+														</c:if>
+				                                </c:if>
+				                                <!-- 대댓글 end -->
+				                            </div>
+										</div>
+									</c:forEach>
 	                            </div>
 	                        </div>
 	                    </section>
 					    <!-- Comments section end-->
-					    <br>
-					    
-					    <!-- 댓글 등록 폼-->
-						<c:choose>
-							<c:when test="${uid==null}">
-								<p>
-									<textarea rows="3" cols="80" id="cmt" name="cmt" placeholder="로그인 후 작성가능합니다..." disabled></textarea>
-									<a href="/login" class="btn btn-primary btn-sm">로그인</a>
-								</p>
-							</c:when>
-							<c:otherwise>
-								<form id="replyForm" onsubmit="return reply_ajax();"> 
-									<div>
-										<p><strong>${uid}</strong></p>
-										<input type="hidden" id="bno" name="bno" value="${detail.num}">
-										<input type="hidden" id="uid" name="uid" value="${uid}">
-										<textarea rows="3" cols="80" id="cmt" name="cmt" placeholder="댓글을 작성해주세요.."></textarea>
-										<button type="submit" class="btn btn-primary btn-sm">작성</button>
-									</div>
-								</form>
-							</c:otherwise>
-						</c:choose>
-						
-						<!-- 댓글 목록 -->
-						<c:forEach var="r" items="${reply}">
-						<c:set value="${r.uid}" var="ruid" />
-						<c:set value="${r.grp}" var="grp" />
-						<c:set value="${r.rno}" var="rno" />
-						<c:set value="${r.cmt}" var="cmt" />
-							<c:if test="${grp == null}" >	<!-- 모댓글 -->
-								<p>
-									<strong>${r.uid}</strong>&nbsp;${r.repDate}
-									
-									<!-- 비로그인 상태일 때 댓글 목록 -->
-									<c:if test="${uid==null}">
-										<c:if test="${cmt==''}">
-											<p style="color:#808080;">삭제된 메세지 입니다.
-										</c:if>
-										<p>${r.cmt}
-									</c:if>
-									
-									<!-- 로그인 후 로그인유저가 작성하지 않은 댓글 -->
-									<c:if test="${uid!=ruid and uid!=null}">
-										<a href="javascript:reRep(${r.rno},${r.grps},'${ruid}');">[답글]</a>
-										<c:if test="${cmt==''}">
-											<p style="color:#808080;">삭제된 메세지 입니다.
-										</c:if>
-										<p>${r.cmt}
-										<span id="reReply${r.rno}${r.grps}"></span>
-									</c:if>
-									
-									<!-- 로그인 후 로그인유저가 작성한 댓글 -->
-									<c:if test="${uid==ruid}">
-										<a href="javascript:reRep(${rno},${r.grps},'${ruid}');">[답글]</a>
-										<a href="javascript:repDelete(${rno},${r.bno},${r.grp})">[삭제]</a>
-										<c:if test="${cmt==''}">
-											<p style="color:#808080;">삭제된 메세지 입니다.
-										</c:if>
-										<p>${r.cmt}
-										<span id="reReply${r.rno}${r.grps}"></span>
-									</c:if>
-								</p>
-								
-							</c:if>
-							
-							<c:if test="${grp != null}" > <!-- 대댓글 -->
-								<div style="font-size: 1em; color:green;">
-									<p>
-										&nbsp;&nbsp;└<strong>${r.uid}</strong>&nbsp;${r.repDate}
-										
-										<!-- 비로그인 상태일 때 댓글 목록 -->
-										<c:if test="${uid==null}">
-											<c:if test="${cmt==''}">
-												<p style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;삭제된 메세지 입니다.
-											</c:if>
-											<p>&nbsp;&nbsp;&nbsp;&nbsp;${r.cmt}
-										</c:if>
-										
-										<!-- 로그인 후 로그인유저가 작성하지 않은 댓글 -->
-										<c:if test="${uid!=ruid and uid!=null}">
-											<a href="javascript:reRep(${r.grp},${r.grps},'${ruid}');">[답글]</a>
-											<c:if test="${cmt==''}">
-												<p style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;삭제된 메세지 입니다.
-											</c:if>
-											<p>&nbsp;&nbsp;&nbsp;&nbsp;${r.cmt}
-											<span id="reReply${r.grp}${r.grps}"></span>
-										</c:if>
-										
-										<!-- 로그인 후 로그인유저가 작성한 댓글 -->
-										<c:if test="${uid==ruid}">
-											<a href="javascript:reRep(${r.grp},${r.grps},'${ruid}');">[답글]</a>
-											<a href="javascript:repDelete(${rno},${r.bno},${r.grp})">[삭제]</a>
-											<c:if test="${cmt==''}">
-												<p style="color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;삭제된 메세지 입니다.
-											</c:if>
-											<p>&nbsp;&nbsp;&nbsp;&nbsp;${r.cmt}
-											<span id="reReply${r.grp}${r.grps}"></span>
-										</c:if>
-									</p>
-								</div>
-							</c:if>
-						</c:forEach> 
-						<!-- 댓글 목록 end -->
 					</div>    
 				</main>
 				<jsp:include page="/WEB-INF/footer.jsp"></jsp:include>

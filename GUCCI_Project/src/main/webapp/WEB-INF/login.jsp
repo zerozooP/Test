@@ -46,11 +46,11 @@
                                     <div class="card-body">
                                         <form id="loginform" onsubmit="return login();">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="uid" id="uid" type="text" placeholder="ID" />
+                                                <input class="form-control" name="uid" id="uid" type="text" placeholder="ID" value="qkrdudwn2557" />
                                                 <label for="inputEmail">ID</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="pwd" id="pwd" type="password" placeholder="Password" />
+                                                <input class="form-control" name="pwd" id="pwd" type="password" placeholder="Password" value="12341234" />
                                                 <label for="inputPassword">Password</label>
                                             </div>
                                             <div class="form-check mb-3">
