@@ -17,7 +17,9 @@ public class BBSVO {
 	private int reply;
 	private int liked;
 	private String changeYn;
+	private String deleteYn;
 	private List<Long> fileIdxs;
+	
 	
 	public BBSVO() {}
 
@@ -34,6 +36,15 @@ public class BBSVO {
 		this.liked = liked;
 	}
 	
+	
+	public String getDeleteYn() {
+		return deleteYn;
+	}
+
+	public void setDeleteYn(String deleteYn) {
+		this.deleteYn = deleteYn;
+	}
+
 	public String getChangeYn() {
 		return changeYn;
 	}

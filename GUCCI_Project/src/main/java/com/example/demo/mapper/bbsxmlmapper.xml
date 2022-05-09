@@ -4,9 +4,11 @@
         
 <mapper namespace="com.example.demo.mapper.BBSXMLMapper">
 
-	<delete id="delete"	parameterType="Integer">
-		DELETE FROM bbs WHERE num=#{num}
-	</delete>
+	<update id="delete"	parameterType="Integer">
+		UPDATE bbs 
+		SET deleteYn="Y"
+		WHERE num=#{num}
+	</update>
 	
 	<update id="edit"
 		parameterType="com.example.demo.vo.BBSVO">
@@ -41,12 +43,13 @@
 	<insert id="insertAdd"
 		parameterType="com.example.demo.vo.BBSVO"
 		useGeneratedKeys="true" keyProperty="num">
-		INSERT INTO bbs VALUES(NULL,#{uid},#{name},#{title},#{content},#{date},0,0,0,#{changeYn})
+		INSERT INTO bbs VALUES(NULL,#{uid},#{name},#{title},#{content},#{date},0,0,0,#{changeYn},#{deleteYn})
 	</insert>
 	
 	<select id="getList"
 		resultType="com.example.demo.vo.BBSVO">
 		SELECT * FROM bbs
+		WHERE deleteYn="N"
 		ORDER BY num DESC
 	</select>
 	

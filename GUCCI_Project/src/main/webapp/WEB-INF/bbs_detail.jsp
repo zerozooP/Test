@@ -72,13 +72,13 @@
 				const listHtml = `
 						<form id="reReplyForm" onsubmit="return reReply_ajax();">
 							<div>
-							<p><strong>${uid}</strong></p>
+							<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;${uid}</strong></p>
 								<input type="hidden" id="grp" name="grp" value="\${rno}">
 								<input type="hidden" id="grps" name="grps" value="\${grps}">
 								<input type="hidden" id="bno" name="bno" value="${detail.num}">
 								<input type="hidden" id="uid" name="uid" value="${uid}">
-								<textarea rows="4" cols="50" id="rcmt" name="cmt" placeholder="댓글입력.."></textarea>
-								<button type="submit">등록</button>
+								<textarea rows="3" class="form-control" id="rcmt" name="cmt" placeholder="Please leave a comment!"></textarea>
+								<div class="loginBtn"><button type="submit" class="btn btn-outline-primary btn-sm">작성</button></div>
 							</div>
 						</form>
 					`;

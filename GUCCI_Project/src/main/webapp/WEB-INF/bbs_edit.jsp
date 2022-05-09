@@ -6,34 +6,7 @@
 		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
 		<title>글쓰기</title>
 		<script>
-			/*function edit_ajax() {
-				var title = $('#title').val();
-				var content = $('#content').val();
-				if(title=="" || content==""){
-					alert("빈칸을 채워주세요");
-					return false;
-				}
-				if(!confirm("정말로 수정하시겠습니까?")){
-					return false;
-				}
-				var serForm = $("#editForm").serialize();
-				$.ajax({
-					url:"/bbs_edit",
-					method:"post",
-					cache:false,
-					dataType:"json",
-					data:serForm,
-					success:function(res){
-						alert(res.edited ? "수정 성공":"수정 실패");
-						location.href="/bbs_detail/${edit.num}";
-					},
-					error:function(xhr, status, err){
-						alert(err);
-					}
-				});
-				return false;
-			}*/
-			
+		
 			const strFileList = "${fileList}"; 				/*[ Controller에서 model로 받은 fileList ]*/
 			const arrFileList = strFileList.split(", "); 	/*[ split 으로 나눠 배열로 저장 ]*/
 			const fileList = arrFileList.length; 			/*[ 리스트의 갯수를 가져옴 ]*/

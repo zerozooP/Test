@@ -11,39 +11,6 @@
 				location.href="/bbs_list/1";
 			}
 			
-			/*function add_ajax(){
-				var title = $("#title").val();
-				var content = $("#content").val();
-				var name = $("#name").val();
-				var files = $("#file_0").val();
-				alert(title + content + name + files);
-				
-				if(title=="" || content==""){
-					alert("빈 항목을 입력해주세요");
-					return false;
-				}
-				
-
-				alert(serForm);
-				$.ajax({
-					url:"/bbs_add",
-					method:"post",
-					processData: false,
-					contentType: false,
-					cache:false,
-					data:serForm,
-					dataType:"json",
-					success:function(res){
-						alert(res.added ? "작성 성공":"작성 실패");
-						location.href="/bbs_list/1";
-					},
-					error:function(xhr, status, err){
-						alert(err);
-					}
-				});
-				return false;
-			}*/
-			
 			let fileIdx = 0;
 
 			function addFile(){
@@ -111,6 +78,7 @@
 		            <div class="container">
 						<form action="/bbs_add" method="post" enctype="multipart/form-data">
 							<input type="hidden" id="changeYn" name="changeYn" value="N" />
+							<input type="hidden" name="deleteYn" value="N" />
 							<!-- Title -->
 							<div class="mb-3">
 								<label for="title">제목</label>
